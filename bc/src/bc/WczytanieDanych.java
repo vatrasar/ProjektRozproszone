@@ -8,6 +8,23 @@ public class WczytanieDanych {
 	String ip;
 	String polecenie;
 	String ping;
+
+	public WczytanieDanych() {
+		ip="";
+		TCP=true;
+		polecenie="";
+		ping="";
+		port=0;
+	}
+
+	public WczytanieDanych(int port, boolean TCP, String ip, String polecenie, String ping) {
+		this.port = port;
+		this.TCP = TCP;
+		this.ip = ip;
+		this.polecenie = polecenie;
+		this.ping = ping;
+	}
+
 	public int getPort() {
 		return port;
 	}
