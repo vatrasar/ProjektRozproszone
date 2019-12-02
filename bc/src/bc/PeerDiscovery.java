@@ -1,24 +1,55 @@
 package bc;
 
+import java.lang.reflect.Array;
 import java.net.InetAddress;
-import java.util.List;
+import java.net.UnknownHostException;
+import java.time.LocalTime;
+import java.util.*;
 import java.lang.String;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.net.InetAddress;
+import java.util.stream.Collectors;
 
 public class PeerDiscovery {
+
     public PeerDiscovery() {
     }
 
-//    public List<String> getAddressesList() {
-//
-//    }
-//
-//
-//    public List<String> getAddressesListByDNS() {
-//
-//    }
+
+
+
+    public List<String> getAddressesListByDNS()throws UnknownHostException {
+        List<String>dnsList=new ArrayList<String>(Arrays.asList(
+                "seed.bitcoin.sipa.be",
+                "dnsseed.bluematt.me",
+                "dnsseed.bitcoin.dashjr.org",
+                "seed.bitcoinstats.com",
+                "seed.bitcoin.jonasschnelli.ch",
+                "seed.btc.petertodd.org")
+        );
+        int time=LocalTime.now().getSecond();
+        InetAddress[]adressArray=null;
+
+
+        for(String adress:dnsList)
+        {
+
+            try {
+                adressArray=InetAddress.getAllByName(adress);
+                break;
+
+            } catch (UnknownHostException e) {
+
+                if (LocalTime.now().getSecond()-time>60) {
+
+                    throw new UnknownHostException();
+                }
+            }
+        };
+        return Arrays.asList(adressArray).stream().map(InetAddress::getHostAddress).collect(Collectors.toList());
+
+    }
 
 
     public String getAddressFromUser() {

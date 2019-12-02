@@ -7,17 +7,17 @@ import java.util.logging.Logger;
 import java.net.InetAddress;
 public class Polaczenie {
 	static WczytanieDanych w;
-	static PeerDiscovery peerDiscowery=new PeerDiscovery();
+	static PeerDiscovery peerDiscovery=new PeerDiscovery();
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		boolean test=true;
 		// TODO Auto-generated method stub
 
 
 		try {
-//			List<String>addresses=peerDiscowery.getAddressesList();
-//			List<String>addresses=peerDiscowery.getAddressesListByDNS();
-			String address=peerDiscowery.getAddressFromUser();
-			System.out.println("Przyj?to adres:"+address);
+
+			List<String>addresses=peerDiscovery.getAddressesListByDNS();
+			String address=peerDiscovery.getAddressFromUser();
+
 			w=new WczytanieDanych();//dodaæ nazwy obslugiwanych polecen
 			if(w.isTCP()) {
 				TcpClient c =new TcpClient(w.getIp(),w.getPort());
