@@ -16,9 +16,10 @@ public class Polaczenie {
 		try {
 
 			List<String>addresses=peerDiscovery.getAddressesListByDNS();
-			String address=peerDiscovery.getAddressFromUser();
 
-			w=new WczytanieDanych();//dodaæ nazwy obslugiwanych polecen
+			String polecenie="version";
+			w=new WczytanieDanych(8333,addresses.get(0),polecenie);//dodaæ nazwy obslugiwanych polecen
+
 			if(w.isTCP()) {
 				TcpClient c =new TcpClient(w.getIp(),w.getPort());
 				TCP(c);
@@ -40,15 +41,29 @@ public class Polaczenie {
 	}
 	private static void TCP(TcpClient c) throws IOException{
 		//operacje
-		if(w.getPolecenie()=="ping") {
-			boolean r=c.ping();
-			//wiadomosc do konsoli
-			if(r) {
-				w.setPing("host is reachable");
-			}
-			else {
-				w.setPing("host is not reachable");
-			}
+
+		switch (w.getPolecenie())
+		{
+			case "ping":
+				boolean r=c.ping();
+				//wiadomosc do konsoli
+				if(r) {
+					w.setPing("host is reachable");
+				}
+				else {
+					w.setPing("host is not reachable");
+				}
+				break;
+			case "version":
+				VersionMessage versionMessage=new VersionMessage(new PeerAddress(c.s.getInetAddress(),c.port),new PeerAddress(InetAddress.getLocalHost(),c.port));
+				versionMessage.send(c.oS);
+				while (true)
+				{
+					int a=c.bR.read();
+					System.out.println(a);
+				}
+
+
 		}
 		//c.send("a");
 		try {

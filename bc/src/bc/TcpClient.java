@@ -8,7 +8,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-//zród³o: https://systembash.com/a-simple-java-tcp-server-and-tcp-client/
+//zrï¿½dï¿½o: https://systembash.com/a-simple-java-tcp-server-and-tcp-client/
 
 public class TcpClient {
 	Socket s;

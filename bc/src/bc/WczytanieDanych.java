@@ -1,6 +1,6 @@
 package bc;
 
-//dane wczytywane od uzytkownika, zostanie dodane pó¿niej
+//dane wczytywane od uzytkownika, zostanie dodane pï¿½niej
 
 public class WczytanieDanych {
 	int port;
@@ -12,9 +12,16 @@ public class WczytanieDanych {
 	public WczytanieDanych() {
 		ip="";
 		TCP=true;
-		polecenie="";
+		polecenie="version";
 		ping="";
-		port=0;
+		port=8333;
+	}
+
+	public WczytanieDanych(int port, String ip, String polecenie) {
+		this.port = port;
+		this.ip = ip;
+		this.polecenie = polecenie;
+		this.TCP=true;
 	}
 
 	public WczytanieDanych(int port, boolean TCP, String ip, String polecenie, String ping) {
@@ -56,7 +63,7 @@ public class WczytanieDanych {
 		return polecenie;
 	}
 	public void setPolecenie(String polecenie) {
-		//wrzucajcie tu w  komentarzu jakie poelcenia ma przyjomwaæ
+		//wrzucajcie tu w  komentarzu jakie poelcenia ma przyjomwaï¿½
 		/*
 		 * ping, ?, ...
 		 */
