@@ -19,6 +19,7 @@ public class PeerDiscovery {
 
 
 
+
     public List<String> getAddressesListByDNS()throws UnknownHostException {
         List<String>dnsList=new ArrayList<String>(Arrays.asList(
                 "seed.bitcoin.sipa.be",
@@ -79,6 +80,10 @@ public class PeerDiscovery {
     private boolean validateIp(String adress) {
         String ipPattern = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         return adress.matches(ipPattern);
+    }
+    void printIpFromDns()throws UnknownHostException
+    {
+        System.out.print(getAddressesListByDNS());
     }
 
 }

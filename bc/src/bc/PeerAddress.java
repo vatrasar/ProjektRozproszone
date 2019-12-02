@@ -25,9 +25,13 @@ public class PeerAddress
         try {
             Utils.uint64ToByteStreamLE(services,outStream);
             byte[] ipBytes = addr.getAddress();
+           //zmiana ipv4 na ipv6
             if (ipBytes.length == 4) {
-                Logger.getGlobal().warning("Uwaga! adresy ipv6 nie są obsługiwane");
-                throw new IOException();
+                byte[] v6addr = new byte[16];
+                System.arraycopy(ipBytes, 0, v6addr, 12, 4);
+                v6addr[10] = (byte) 0xFF;
+                v6addr[11] = (byte) 0xFF;
+                ipBytes = v6addr;
             }
             outStream.write(ipBytes);
             Utils.uint16ToByteStreamBE(port, outStream);
