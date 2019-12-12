@@ -1,16 +1,15 @@
-package bc;
+package bc.messages;
+
+import bc.Utils;
+import bc.messages.PeerAddress;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
-import java.math.BigInteger;
 import java.util.logging.Logger;
 
 
 
-public class VersionMessage
-{
+public class VersionMessage implements Message {
     public int clientVersion=106;
 
     /**
@@ -28,10 +27,10 @@ public class VersionMessage
         this.sourceAddr = sourceAddr;
     }
 
-    void send(OutputStream outStream)
+    public void send(OutputStream outStream)
     {
 
-        long time=Utils.currentTimeSeconds();
+        long time= Utils.currentTimeSeconds();
         long localServices=0;
 
         try {

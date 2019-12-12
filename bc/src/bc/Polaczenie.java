@@ -1,10 +1,14 @@
 package bc;
 
+import bc.messages.PeerAddress;
+import bc.messages.VerackMessage;
+import bc.messages.VersionMessage;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.logging.Logger;
-import java.net.InetAddress;
+
 public class Polaczenie {
 	static WczytanieDanych w;
 	static PeerDiscovery peerDiscovery=new PeerDiscovery();
@@ -18,7 +22,7 @@ public class Polaczenie {
 			List<String>addresses=peerDiscovery.getAddressesListByDNS();
 
 			String polecenie="version";
-			w=new WczytanieDanych(8333,addresses.get(0),polecenie);//dodaæ nazwy obslugiwanych polecen
+			w=new WczytanieDanych(8333,"104.199.184.15",polecenie);//dodaæ nazwy obslugiwanych polecen
 
 			if(w.isTCP()) {
 				TcpClient c =new TcpClient(w.getIp(),w.getPort());
@@ -49,18 +53,21 @@ public class Polaczenie {
 				//wiadomosc do konsoli
 				if(r) {
 					w.setPing("host is reachable");
+					Logger.getGlobal().info("ping dotar?");
 				}
 				else {
 					w.setPing("host is not reachable");
 				}
 				break;
 			case "version":
-				VersionMessage versionMessage=new VersionMessage(new PeerAddress(c.s.getInetAddress(),c.port),new PeerAddress(InetAddress.getLocalHost(),c.port));
+				VersionMessage versionMessage=new VersionMessage(new PeerAddress(c.s.getInetAddress(),c.port),new PeerAddress(c.s.getLocalAddress(),c.port));
 				versionMessage.send(c.oS);
+				new VerackMessage().send(c.oS);
 				while (true)
 				{
 					int a=c.bR.read();
-					System.out.println(a);
+					if(a!=-1)
+						System.out.println(a);
 				}
 
 

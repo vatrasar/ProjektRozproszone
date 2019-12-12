@@ -1,4 +1,6 @@
-package bc;
+package bc.messages;
+
+import bc.Utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
