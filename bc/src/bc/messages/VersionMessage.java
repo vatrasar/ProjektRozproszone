@@ -1,7 +1,6 @@
 package bc.messages;
 
-import bc.Utils;
-import bc.messages.PeerAddress;
+import bc.serializeUtils.Utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,9 +34,7 @@ public class VersionMessage implements Message {
 
         try {
             Utils.uint32ToByteStreamLE(clientVersion,outStream);
-            Utils.uint32ToByteStreamLE(localServices, outStream);
-            Utils.uint32ToByteStreamLE(localServices >> 32, outStream);
-            Utils.uint32ToByteStreamLE(time,outStream );
+            sendServices(outStream,localServices);
             Utils.uint32ToByteStreamLE(time >> 32, outStream);
             receivingAddr.serialize(outStream);
             sourceAddr.serialize(outStream);
@@ -51,10 +48,16 @@ public class VersionMessage implements Message {
             Utils.uint32ToByteStreamLE((long) 1, outStream);
             Logger.getGlobal().info("Wiadomosc Version wysłana");
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getGlobal().warning("Blad przy widaomości Version");
         }
 
     }
+
+    private void sendServices(OutputStream outStream, long localServices) throws IOException {
+        Utils.uint32ToByteStreamLE(localServices, outStream);
+        Utils.uint32ToByteStreamLE(localServices >> 32, outStream);
+    }
+
 
 }
 

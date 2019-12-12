@@ -1,12 +1,11 @@
 package bc.messages;
 
-import bc.Utils;
+import bc.serializeUtils.Utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.InetAddress;
-import java.util.logging.Logger;
 
 
 public class PeerAddress
@@ -22,7 +21,7 @@ public class PeerAddress
         this.port = port;
     }
 
-    void serialize(OutputStream outStream)
+    public void serialize(OutputStream outStream)
     {
         try {
             Utils.uint64ToByteStreamLE(services,outStream);

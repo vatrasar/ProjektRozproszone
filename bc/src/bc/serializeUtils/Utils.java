@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package bc;
+package bc.serializeUtils;
 
 
 import java.io.IOException;
@@ -27,8 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
+
 /**
 Plik zawiera funkcje które przydały się przy konwersji różnych typów na ich bitowe, oraz bezznakowe
  odpowiedzniki
