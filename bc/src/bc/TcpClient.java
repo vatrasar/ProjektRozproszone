@@ -25,11 +25,8 @@ public class TcpClient {
 	 BufferedReader  bR; //odczyt z servera
 	public TcpClient(String ip, int port) throws UnknownHostException, IOException {
 		super();
-		 this.ip2 = new InetSocketAddress(InetAddress.getByName(ip), port);
 		this.port = port;
-		s=new Socket();
-        s.bind(new InetSocketAddress(this.getIP(), 0));
-        s.connect(ip2);
+		s = new Socket(ip, port);//6789 domyslnie
 		oS=new DataOutputStream(s.getOutputStream());
 		bR=new BufferedReader(new InputStreamReader(s.getInputStream()));
 	}
@@ -66,21 +63,5 @@ public class TcpClient {
 	public void close() throws IOException {
         s.close();
     }
-	 
 
-private InetAddress getIP() throws SocketException {
-    Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
-    NetworkInterface ni;
-    while (nis.hasMoreElements()) {
-        ni = nis.nextElement();
-        if (!ni.isLoopback() && ni.isUp()) {
-            for (InterfaceAddress ia : ni.getInterfaceAddresses()) {
-                if (ia.getAddress().getAddress().length == 4) {
-                    return ia.getAddress();
-                }
-            }
-        }
-    }
-    return null;
-}
 }
