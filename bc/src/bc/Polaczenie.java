@@ -62,7 +62,8 @@ public class Polaczenie {
 			case "version":
 				VersionMessage versionMessage=new VersionMessage(new PeerAddress(c.s.getInetAddress(),c.port),new PeerAddress(c.s.getLocalAddress(),c.port));
 				versionMessage.send(c.oS);
-				new VerackMessage().send(c.oS);
+
+
 				while (true)
 				{
 					int a=c.bR.read();

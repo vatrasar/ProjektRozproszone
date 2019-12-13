@@ -7,17 +7,22 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class AddrMessage implements Message {
+public class AddrMessage extends Message {
 
     List<PeerAddress> adrList;
 
     public AddrMessage(List<PeerAddress>adresses) {
+
+        super("addr",0);
         adrList=adresses;
+        this.payloadSize=adrList.size()*26+(new VarInt(Math.max(adrList.size(),1000)).encode()).length;
+
 
     }
 
     @Override
     public void send(OutputStream outStream) {
+        super.send(outStream);
         try {
 
             outStream.write(new VarInt(Math.max(adrList.size(),1000)).encode());

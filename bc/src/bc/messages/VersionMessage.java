@@ -8,8 +8,9 @@ import java.util.logging.Logger;
 
 
 
-public class VersionMessage implements Message {
+public class VersionMessage extends Message {
     public int clientVersion=106;
+
 
     /**
      * adres adresata wiadomości
@@ -22,6 +23,7 @@ public class VersionMessage implements Message {
     public PeerAddress sourceAddr;
 
     public VersionMessage(PeerAddress receivingAddr, PeerAddress sourceAddr) {
+        super("version",84);
         this.receivingAddr = receivingAddr;
         this.sourceAddr = sourceAddr;
     }
