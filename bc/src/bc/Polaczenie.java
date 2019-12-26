@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class Polaczenie {
 	static WczytanieDanych w;
 	static PeerDiscovery peerDiscovery=new PeerDiscovery();
-	public static void main(String[] args) throws UnknownHostException, IOException {
+	 void pol() throws UnknownHostException, IOException {
 		boolean test=true;
 		// TODO Auto-generated method stub
 

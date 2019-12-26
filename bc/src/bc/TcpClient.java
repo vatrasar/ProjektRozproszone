@@ -23,16 +23,13 @@ public class TcpClient {
 	int port;
 	 DataOutputStream oS; // wyslanie na server
 	 BufferedReader  bR; //odczyt z servera
-	public TcpClient(String ip, int port) throws UnknownHostException, IOException {
-		super();
-		 this.ip2 = new InetSocketAddress(InetAddress.getByName(ip), port);
-		this.port = port;
-		s=new Socket();
-        s.bind(new InetSocketAddress(this.getIP(), 0));
-        s.connect(ip2);
-		oS=new DataOutputStream(s.getOutputStream());
-		bR=new BufferedReader(new InputStreamReader(s.getInputStream()));
-	}
+	 public TcpClient(String ip, int port) throws UnknownHostException, IOException {
+			super();
+			this.port = port;
+			s = new Socket(ip, port);//6789 domyslnie
+			oS=new DataOutputStream(s.getOutputStream());
+			bR=new BufferedReader(new InputStreamReader(s.getInputStream()));
+		}
 	  public String send(String msg) throws IOException {
 		  oS.writeBytes(msg + 'n');
 		  return bR.readLine();
