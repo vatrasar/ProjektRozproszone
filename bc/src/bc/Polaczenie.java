@@ -12,7 +12,13 @@ import java.util.logging.Logger;
 public class Polaczenie {
 	static WczytanieDanych w;
 	static PeerDiscovery peerDiscovery=new PeerDiscovery();
-	 void pol() throws UnknownHostException, IOException {
+	String ip,comand;
+	public Polaczenie(String comand,String ip) {
+		this.ip=ip;
+		this.comand=comand;
+	}
+
+	void pol() throws UnknownHostException, IOException {
 		boolean test=true;
 		// TODO Auto-generated method stub
 
@@ -27,6 +33,7 @@ public class Polaczenie {
 			if(w.isTCP()) {
 				TcpClient c =new TcpClient(w.getIp(),w.getPort());
 				TCP(c);
+
 			}
 			else {
 				UdpClient c=new UdpClient(w.getIp(), w.getPort());

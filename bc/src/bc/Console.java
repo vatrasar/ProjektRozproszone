@@ -11,6 +11,9 @@
 	import java.io.*;
 	import java.awt.*;
 	import java.awt.event.*;
+	import java.util.Scanner;
+	import java.util.logging.Level;
+	import java.util.logging.Logger;
 	import javax.swing.*;
 
 
@@ -183,7 +186,81 @@
 		}	
 		public static void main(String[] arg)
 		{
-			new Console(); // create console with not reference	
+//			new Console(); // create console with not reference
+
+//			Polaczenie polaczenie=new Polaczenie();
+			DebugConsole.consoleRun();
+
 		}			
 
+}
+
+class DebugConsole
+{
+	public DebugConsole() {
+	}
+
+	public static void consoleRun()
+	{
+		boolean toClose=false;
+		while (!toClose)
+		{
+
+			System.out.print("Prosze wpisac polecenie:");
+			String comand = getInputFormConsole();
+			Logger logger=Logger.getLogger("debugLogger");
+			logger.setLevel(Level.ALL);
+
+			switch (comand)
+			{
+				case "version":
+					logInfo(logger,"Wiadomosc version");
+
+					System.out.print("Prosze podac adres ip celu wiadomosci");
+
+					String ip=getInputFormConsole();
+					if(isIpValid(ip))
+					{
+						Polaczenie polaczenie=new Polaczenie("version",ip);
+					}
+					else
+					{
+						System.out.println("Bledny adres ip");
+					}
+
+					sleepTherad(); //logger needs some time to react
+
+					break;
+				case "close":
+					logInfo(logger,"Zamykanie programu");
+					toClose=true;
+ 					break;
+				default:
+				System.out.println("No such command, please try again");
+			}
+		}
+
+	}
+
+	private static boolean isIpValid(String ip) {
+		String pattern="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+		return ip.matches(pattern);
+	}
+
+	private static void sleepTherad() {
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static String getInputFormConsole() {
+		Scanner scanner=new Scanner(System.in);
+		return scanner.nextLine();
+	}
+	private static void logInfo(Logger logger,String message)
+	{
+		logger.info(message);
+	}
 }
