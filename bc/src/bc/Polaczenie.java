@@ -6,7 +6,10 @@ import bc.messages.VersionMessage;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Timer;
 import java.util.logging.Logger;
 
 public class Polaczenie {
@@ -18,6 +21,11 @@ public class Polaczenie {
 		this.comand=comand;
 	}
 
+	public Polaczenie() {
+		this.ip="127.0.0.1";
+		this.comand="version";
+	}
+
 	void pol() throws UnknownHostException, IOException {
 		boolean test=true;
 		// TODO Auto-generated method stub
@@ -25,10 +33,10 @@ public class Polaczenie {
 
 		try {
 
-			List<String>addresses=peerDiscovery.getAddressesListByDNS();
+//			List<String>addresses=peerDiscovery.getAddressesListByDNS();
 
-			String polecenie="version";
-			w=new WczytanieDanych(8333,"104.199.184.15",polecenie);//dodaæ nazwy obslugiwanych polecen
+
+			w=new WczytanieDanych(8333,ip,comand);//dodaæ nazwy obslugiwanych polecen
 
 			if(w.isTCP()) {
 				TcpClient c =new TcpClient(w.getIp(),w.getPort());
@@ -69,10 +77,12 @@ public class Polaczenie {
 			case "version":
 				VersionMessage versionMessage=new VersionMessage(new PeerAddress(c.s.getInetAddress(),c.port),new PeerAddress(c.s.getLocalAddress(),c.port));
 				versionMessage.send(c.oS);
+				LocalDateTime start=LocalDateTime.now();
 
-
-				while (true)
+				System.out.println("Odieranie wiadomosci...");
+				while (LocalTime.now().getSecond() -start.getSecond()<10)
 				{
+
 					int a=c.bR.read();
 					if(a!=-1)
 						System.out.println(a);

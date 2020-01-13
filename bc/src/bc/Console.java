@@ -8,6 +8,10 @@
 	//
 	// RJHM van den Bergh , rvdb@comweb.nl
 	package bc;
+	import bc.messages.PeerAddress;
+
+	import java.net.UnknownHostException;
+	import java.util.List;
 	import java.io.*;
 	import java.awt.*;
 	import java.awt.event.*;
@@ -216,12 +220,17 @@ class DebugConsole
 				case "version":
 					logInfo(logger,"Wiadomosc version");
 
-					System.out.print("Prosze podac adres ip celu wiadomosci");
+					System.out.print("Prosze podac adres ip celu wiadomosci>");
 
 					String ip=getInputFormConsole();
 					if(isIpValid(ip))
 					{
 						Polaczenie polaczenie=new Polaczenie("version",ip);
+						try {
+							polaczenie.pol();
+						} catch (IOException e) {
+							System.out.println("Wysylanie wiadomosci nieudane");
+						}
 					}
 					else
 					{
@@ -235,6 +244,23 @@ class DebugConsole
 					logInfo(logger,"Zamykanie programu");
 					toClose=true;
  					break;
+				case "ipDNS":
+					PeerDiscovery peerDiscovery=new PeerDiscovery();
+					List<String>addressesListByDNS= null;
+					try {
+						addressesListByDNS = peerDiscovery.getAddressesListByDNS();
+						addressesListByDNS.forEach(System.out::println);
+					} catch (UnknownHostException e) {
+						System.out.println("Nie udalo sie nawiazac polaczenia z DNS");
+					}
+
+					break;
+				case "help":
+					String helpInfo="close: zamykanie programu\n" +
+							"version: wyslanie wiadomosci version\n" +
+							"ipDNS: wypisanie adresow ip pochodzacych z wyszukiwania DNS\n";
+					System.out.println(helpInfo);
+					break;
 				default:
 				System.out.println("No such command, please try again");
 			}
@@ -262,5 +288,6 @@ class DebugConsole
 	private static void logInfo(Logger logger,String message)
 	{
 		logger.info(message);
+		sleepTherad();
 	}
 }
