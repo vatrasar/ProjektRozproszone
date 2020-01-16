@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.logging.Logger;
 
@@ -40,6 +41,9 @@ public class Polaczenie {
 
 			if(w.isTCP()) {
 				TcpClient c =new TcpClient(w.getIp(),w.getPort());
+				System.out.println(c.s.getLocalAddress());
+//				Logger.getGlobal().info("zaczynam pisac");
+
 				TCP(c);
 
 			}
@@ -68,25 +72,31 @@ public class Polaczenie {
 				//wiadomosc do konsoli
 				if(r) {
 					w.setPing("host is reachable");
-					Logger.getGlobal().info("ping dotar?");
+					Logger.getGlobal().info("ping dotarl");
 				}
 				else {
 					w.setPing("host is not reachable");
+					Logger.getGlobal().info("ping nie dotarl");
 				}
 				break;
 			case "version":
+				System.out.println(c.s.getLocalAddress());
+				int delay = getDelay();
 				VersionMessage versionMessage=new VersionMessage(new PeerAddress(c.s.getInetAddress(),c.port),new PeerAddress(c.s.getLocalAddress(),c.port));
 				versionMessage.send(c.oS);
 				LocalDateTime start=LocalDateTime.now();
 
 				System.out.println("Odieranie wiadomosci...");
-				while (LocalTime.now().getSecond() -start.getSecond()<10)
+
+
+				while (LocalTime.now().getSecond() -start.getSecond()<delay)
 				{
 
 					int a=c.bR.read();
 					if(a!=-1)
 						System.out.println(a);
 				}
+
 
 
 		}
@@ -99,6 +109,13 @@ public class Polaczenie {
 		}
 		
 	}
+
+	private static int getDelay() {
+		Scanner scanner=new Scanner(System.in);
+		System.out.print("Podaj czas trfania rzadania(sekundy)>");
+		return scanner.nextInt();
+	}
+
 	private static void UDP(UdpClient c) throws IOException{
 		//operacje
 		if(w.getPolecenie()=="ping") {

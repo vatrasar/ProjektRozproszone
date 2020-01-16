@@ -261,6 +261,29 @@ class DebugConsole
 							"ipDNS: wypisanie adresow ip pochodzacych z wyszukiwania DNS\n";
 					System.out.println(helpInfo);
 					break;
+				case "ping":
+					logInfo(logger,"Wiadomosc ping");
+
+					System.out.print("Prosze podac adres ip celu pinga>");
+
+					ip=getInputFormConsole();
+					if(isIpValid(ip))
+					{
+						Polaczenie polaczenie=new Polaczenie("ping",ip);
+						try {
+							polaczenie.pol();
+						} catch (IOException e) {
+							System.out.println("Wysylanie pinga");
+						}
+					}
+					else
+					{
+						System.out.println("Bledny adres ip");
+					}
+
+					sleepTherad(); //logger needs some time to react
+
+					break;
 				default:
 				System.out.println("No such command, please try again");
 			}

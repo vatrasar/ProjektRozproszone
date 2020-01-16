@@ -33,7 +33,7 @@ public class VersionMessage extends Message {
 
         long time= Utils.currentTimeSeconds();
         long localServices=0;
-
+        super.send(outStream);//send header
         try {
             Utils.uint32ToByteStreamLE(clientVersion,outStream);
             sendServices(outStream,localServices);
