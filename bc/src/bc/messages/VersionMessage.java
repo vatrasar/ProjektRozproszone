@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 
 public class VersionMessage extends Message {
-    public int clientVersion=106;
+    public int clientVersion=60002;
 
 
     /**

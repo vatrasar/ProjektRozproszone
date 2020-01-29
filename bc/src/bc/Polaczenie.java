@@ -91,7 +91,8 @@ public class Polaczenie {
 
 				while (LocalTime.now().getSecond() -start.getSecond()<delay)
 				{
-
+					if(LocalTime.now().getSecond() -start.getSecond()<0)
+						break;
 					int a=c.bR.read();
 					if(a!=-1)
 						System.out.println(a);
